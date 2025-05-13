@@ -1,0 +1,99 @@
+{% extends "sportscomplex/layout.html" %}
+{% load static %}
+{% block title %}Membership Registration{% endblock %}
+
+{% block body %}
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
+    <div class="w-full max-w-lg bg-white rounded-xl shadow-xl p-8 animate-fade-in">
+        <h2 class="text-3xl font-bold mb-6 text-center text-blue-700">Register for Membership</h2>
+        
+        <!-- Pricing info card -->
+        <div class="mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <h3 class="font-semibold text-blue-800 mb-2">Membership Pricing</h3>
+            <ul id="pricing-list" class="text-sm text-gray-700 space-y-1">
+                <li class="flex justify-between">
+                    <span>One-Time Registration Fee:</span>
+                    <span id="registration-fee" class="font-medium">Rs. {{ rates.registration_fee }}</span>
+                </li>
+                <li class="flex justify-between">
+                    <span>Swimming Membership:</span>
+                    <span id="swimming-rate" class="font-medium">Rs. {{ rates.swimming_rate }}/month</span>
+                </li>
+                <li class="flex justify-between">
+                    <span>Gym Membership:</span>
+                    <span id="gym-rate" class="font-medium">Rs. {{ rates.gym_rate }}/month</span>
+                </li>
+                <li class="flex justify-between font-semibold text-blue-700">
+                    <span>Swimming + Gym Bundle:</span>
+                    <span id="master-card-rate">Rs. {{ rates.master_card_rate }}/month</span>
+                </li>
+            </ul>
+            <p id="user-type-info" class="mt-2 text-xs text-blue-600 italic">Rates for {{ rates.user_type }}</p>
+        </div>
+        
+        <form 
+            method="post"
+            hx-post="{% url 'membership' %}"
+            hx-target="this"
+            hx-swap="outerHTML"
+            class="space-y-6"
+        >
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Start Date</label>
+                {{ form.start_date }}
+                {{ form.start_date.errors }}
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Select Facilities</label>
+                <div class="space-y-2">
+                    {{ form.membership_facility }}
+                </div>
+                {{ form.membership_facility.errors }}
+                <p class="text-xs text-gray-500 mt-1">Select multiple facilities for special bundle pricing</p>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Total Amount</label>
+                {{ form.fixed_amount }}
+                <p class="text-xs text-gray-500 mt-1">Amount will be calculated automatically based on your selection</p>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Payment Method</label>
+                <div class="flex gap-6">
+                    {{ form.payment_method }}
+                </div>
+                {{ form.payment_method.errors }}
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-md hover:scale-105">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.animate-fade-in {
+  animation: fade-in 0.7s cubic-bezier(.4,0,.2,1);
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Add a version parameter to prevent caching -->
+<script src="{% static 'js/membership_pricing.js' %}?v={{ timestamp }}"></script>
+<script>
+    // Making sure the rates are accessible to membership_pricing.js for price calculation
+    const serverRates = JSON.parse('{{ rates_json|escapejs }}');
+    console.log("Server rates:", serverRates); // debugging step
+</script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "sportscomplex/layout.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 -mt-8 -mb-8">
+    <!-- Left side with image and branding -->
+    <div class="hidden md:flex md:w-1/2 bg-nust-blue flex-col items-center justify-center p-8 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-pattern"></div>
+        <img src="https://nust.edu.pk/wp-content/uploads/2020/04/ns1.jpg" alt="NUST Logo" class="w-32 h-32 object-contain mb-6 z-10 animate-float bg-white p-2 rounded-full">
+        <h1 class="text-white text-4xl font-bold text-center mb-4 z-10">NUST Sports Complex</h1>
+        <p class="text-blue-100 text-xl text-center max-w-md z-10">Login to access world-class sports facilities</p>
+        
+        <!-- Sports illustration -->
+        <div class="mt-12 z-10 w-4/5 max-w-lg">
+            <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur-sm border border-white border-opacity-20 text-center">
+                <i class="fas fa-quote-left text-white text-opacity-30 text-2xl mb-4"></i>
+                <p class="text-white text-lg italic mb-4">"A healthy body bears a healthy mind"</p>
+                <p class="text-blue-200 font-medium">– Aristotle</p>
+            </div>
+        </div>
+        
+        <!-- Bottom decorative wave -->
+        <div class="absolute bottom-0 left-0 right-0 z-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="opacity-20"><path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,181.3C384,203,480,213,576,202.7C672,192,768,160,864,170.7C960,181,1056,235,1152,245.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+        </div>
+    </div>
+    
+    <!-- Right side with login form -->
+    <div class="w-full md:w-1/2 flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white rounded-xl shadow-2xl p-8 animate-fade-in border border-gray-100">
+            <!-- Mobile logo (visible only on small screens) -->
+            <div class="md:hidden flex justify-center mb-6">
+                <img src="https://www.nust.edu.pk/SiteAssets/Images/Logo/NUST_Logo_New.png" alt="NUST Logo" class="w-20 h-20 object-contain">
+            </div>
+            
+            <h2 class="text-3xl font-bold mb-6 text-center text-nust-blue">Welcome Back</h2>
+            
+            <!-- Form container for HTMX updates -->
+            <div id="form-container">
+                {% include "sportscomplex/partials/login_form.html" %}
+            </div>
+            
+            <div class="mt-8 text-center text-gray-600">
+                <p>Don't have an account?</p>
+                <a href="{% url 'register' %}" class="text-nust-blue hover:text-blue-800 font-medium">Create an Account</a>
+            </div>
+            
+            <div class="mt-4 text-center text-gray-600">
+                <p>Are you a staff member?</p>
+                <a href="{% url 'staff:login' %}" class="text-nust-blue hover:text-blue-800 font-medium">Login as Staff</a>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <p class="text-xs text-center text-gray-500">
+                    By logging in, you agree to the NUST Sports Complex Terms of Service and Privacy Policy.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/booking_pricing.js' %}"></script>
+<!--  Smooth handling of hx swaps -->
+<script>
+    document.body.addEventListener('htmx:configRequest', function(event) {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    });
+
+    document.body.addEventListener('htmx:beforeSwap', function(event) {
+        if (event.detail.xhr.status === 200 && event.detail.xhr.getResponseHeader("HX-Redirect")) {
+            window.location.href = event.detail.xhr.getResponseHeader("HX-Redirect");
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

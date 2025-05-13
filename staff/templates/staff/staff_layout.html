@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUST Sports Complex - {% block title %}Staff Portal{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nust-blue': '#003366',
+                        'nust-gold': '#fab900',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                    },
+                    boxShadow: {
+                        'top': '0 -4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out;
+        }
+        
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex items-center justify-between">
+                <a href="{% url 'staff:dashboard' %}" class="flex items-center space-x-3">
+                    <img src="https://nust.edu.pk/wp-content/uploads/2020/04/ne2.jpg" alt="NUST Logo" class="h-12 w-auto">
+                    <div>
+                        <h1 class="text-xl font-bold text-nust-blue leading-tight">NUST</h1>
+                        <h2 class="text-sm font-medium text-nust-gold leading-tight">Staff Portal</h2>
+                    </div>
+                </a>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" onclick="toggleMenu()" class="text-gray-500 hover:text-nust-blue focus:outline-none focus:text-nust-blue">
+                        <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                            <path id="menuIcon" class="block" d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                            <path id="closeIcon" class="hidden" d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            {% if user.is_authenticated %}
+            <nav class="hidden md:flex md:items-center md:space-x-6">
+                <a href="{% url 'staff:dashboard' %}" class="text-gray-700 hover:text-nust-blue font-medium px-2 py-1 rounded hover:bg-blue-50 transition-all duration-200">
+                    <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
+                </a>
+                <div class="border-l border-gray-300 h-6"></div>
+                <div class="relative group">
+                    <button class="flex items-center text-gray-700 hover:text-nust-blue font-medium px-2 py-1 rounded hover:bg-blue-50 transition-all duration-200">
+                        <i class="fas fa-user-circle mr-1"></i> {{ user.username }} <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            {% else %}
+            <div class="hidden md:block">
+                <a href="{% url 'staff:login' %}" class="bg-nust-blue hover:bg-blue-800 text-white font-medium px-4 py-1.5 rounded shadow-sm transition-all duration-200">
+                    <i class="fas fa-sign-in-alt mr-1"></i> Staff Login
+                </a>
+            </div>
+            {% endif %}
+            
+            <!-- Mobile Navigation -->
+            <nav id="mobileMenu" class="hidden flex flex-col mt-4 pb-4 border-t border-gray-200 md:hidden animate-fade-in">
+                {% if user.is_authenticated %}
+                <a href="{% url 'staff:dashboard' %}" class="mt-4 text-gray-700 hover:text-nust-blue font-medium">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                </a>
+                <a href="{% url 'logout' %}" class="mt-3 text-red-600 hover:text-red-700 font-medium">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+                {% else %}
+                <a href="{% url 'staff:login' %}" class="mt-4 text-nust-blue hover:text-blue-800 font-medium">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Staff Login
+                </a>
+                <a href="{% url 'login' %}" class="mt-4 text-gray-700 hover:text-nust-blue font-medium">
+                    <i class="fas fa-home mr-2"></i> Return to Main Site
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-nust-blue text-white shadow-top mt-auto">
+        <div class="container mx-auto pt-8 pb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="https://nust.edu.pk/wp-content/uploads/2020/04/ns1.jpg" alt="NUST Logo" class="h-10 w-auto mr-3 bg-white p-1 rounded">
+                        <h3 class="text-xl font-bold">Staff Portal</h3>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Access your staff dashboard to manage facility assignments, schedules, and more.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'staff:dashboard' %}" class="text-gray-300 hover:text-white text-sm">Dashboard</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Schedule</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Help & Support</a></li>
+                        <li><a href="{% url 'login' %}" class="text-gray-300 hover:text-white text-sm">Main Site</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <address class="text-sm text-gray-300 not-italic">
+                        <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> NUST Campus, H-12, Islamabad</p>
+                        <p class="mb-2"><i class="fas fa-phone mr-2"></i> +92-51-90856878</p>
+                        <p class="mb-2"><i class="fas fa-envelope mr-2"></i> sports@nust.edu.pk</p>
+                    </address>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-blue-800">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-sm text-gray-400">
+                        © {% now "Y" %} NUST Sports Complex. All rights reserved.
+                    </p>
+                    <div class="mt-4 md:mt-0">
+                        <a href="#" class="text-xs text-gray-400 hover:text-white mr-4">Privacy Policy</a>
+                        <a href="#" class="text-xs text-gray-400 hover:text-white">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        }
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

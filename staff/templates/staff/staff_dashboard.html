@@ -1,0 +1,110 @@
+{% extends "staff/staff_layout.html" %}
+{% load static %}
+
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .htmx-indicator {
+        display: none;
+    }
+    .htmx-request .htmx-indicator {
+        display: inline-block;
+    }
+    .htmx-request.htmx-indicator {
+        display: inline-block;
+    }
+    
+    .assignment-row:hover {
+        background-color: rgba(59, 130, 246, 0.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Staff Dashboard</h1>
+        <div class="flex items-center">
+            <span class="mr-2 text-gray-700">Welcome, {{ request.user.first_name }} {{ request.user.last_name }}</span>
+            <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg text-sm">
+                <i class="fas fa-sign-out-alt mr-1"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Assignments Card -->
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Your Upcoming Assignments</h2>
+            <button 
+                class="text-sm text-blue-600 hover:text-blue-800 flex items-center"
+                hx-get="{% url 'staff:dashboard' %}?partial=assignments"
+                hx-target="#assignments-table-container"
+                hx-swap="innerHTML"
+                hx-indicator="#refresh-spinner"
+            >
+                <span id="refresh-spinner" class="htmx-indicator mr-1">
+                    <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </span>
+                <i class="fas fa-sync-alt mr-1"></i> Refresh
+            </button>
+        </div>
+        
+        <div id="assignments-table-container">
+            {% include "staff/partials/assignments_table.html" %}
+        </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Quick Actions Card -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
+            <div class="space-y-3">
+                <a href="#" class="block w-full bg-nust-blue text-white py-3 px-4 rounded-lg text-center hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-clock mr-2"></i> View Schedule
+                </a>
+                <a href="#" class="block w-full bg-gray-100 text-gray-800 py-3 px-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-exchange-alt mr-2"></i> Request Shift Change
+                </a>
+                <a href="#" class="block w-full bg-gray-100 text-gray-800 py-3 px-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-user-edit mr-2"></i> Update Profile
+                </a>
+            </div>
+        </div>
+
+        <!-- Assigned Facilities Card -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Your Assigned Facilities</h2>
+            {% if staff_member.assignment.all %}
+                <div class="grid grid-cols-2 gap-3">
+                    {% for facility in staff_member.assignment.all %}
+                        <div class="bg-gray-100 rounded-lg p-3 flex items-center">
+                            <i class="
+                                {% if facility.facility_name == 'swimming' %}fas fa-swimming-pool
+                                {% elif facility.facility_name == 'gym' %}fas fa-dumbbell
+                                {% elif facility.facility_name == 'bowling' %}fas fa-bowling-ball
+                                {% elif facility.facility_name == 'badminton' %}fas fa-table-tennis
+                                {% elif facility.facility_name == 'pool' %}fas fa-water
+                                {% else %}fas fa-running
+                                {% endif %} text-nust-blue mr-2"></i>
+                            <span>{{ facility.facility_name|title }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-gray-500 text-center py-4">You are not assigned to any facilities</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- HTMX library -->
+<script src="https://unpkg.com/htmx.org@1.9.4"></script>
+{% endblock %}

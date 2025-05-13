@@ -1,0 +1,113 @@
+{% extends "sportscomplex/layout.html" %}
+{% load static %}
+
+{% block title %}Your Membership{% endblock %}
+
+{% block body %}
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
+    <div class="w-full max-w-lg bg-white rounded-xl shadow-xl p-8 animate-fade-in">
+        <h2 class="text-3xl font-bold mb-6 text-center text-blue-700">Your Active Membership</h2>
+        
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Membership Status</h3>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                    {{ membership.get_status_display }}
+                </span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <p class="text-sm text-gray-500">Member</p>
+                    <p class="font-medium">{{ membership.membership_user.get_full_name }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Member Type</p>
+                    <p class="font-medium">{{ membership.membership_user.get_type_display }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Start Date</p>
+                    <p class="font-medium">{{ membership.start_date|date:"F j, Y" }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">End Date</p>
+                    <p class="font-medium">{{ membership.end_date|date:"F j, Y" }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Days Remaining</p>
+                    <p class="font-medium">{{ days_left }} days</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Membership Fee</p>
+                    <p class="font-medium">Rs. {{ membership.fixed_amount }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold mb-3">Facility Access</h3>
+            <div class="grid grid-cols-1 gap-3">
+                {% for facility in facilities %}
+                <div class="flex items-center p-3 rounded-lg bg-gray-50 border border-gray-200">
+                    <div class="rounded-full bg-blue-100 p-2 mr-3">
+                        {% if facility.facility_name == 'gym' %}
+                            <i class="fas fa-dumbbell text-blue-600"></i>
+                        {% elif facility.facility_name == 'swimming' %}
+                            <i class="fas fa-swimming-pool text-blue-600"></i>
+                        {% else %}
+                            <i class="fas fa-trophy text-blue-600"></i>
+                        {% endif %}
+                    </div>
+                    <span class="font-medium">{{ facility.get_facility_name_display }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-3">Payment Information</h3>
+            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <p class="text-sm text-gray-500">Payment Date</p>
+                        <p class="font-medium">{{ payment.datetime|date:"F j, Y" }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Payment Method</p>
+                        <p class="font-medium">{{ payment.get_method_display }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Amount Paid</p>
+                        <p class="font-medium">Rs. {{ payment.total_amount }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Transaction ID</p>
+                        <p class="font-medium">{{ payment.id }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex justify-center mt-6">
+            {% if days_left <= 7 %}
+            <a href="{% url 'membership' %}" class="px-6 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition-all mr-3">
+                Renew Membership
+            </a>
+            {% endif %}
+            <a href="{% url 'home' %}" class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all">
+                Return to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.animate-fade-in {
+  animation: fade-in 0.7s cubic-bezier(.4,0,.2,1);
+}
+</style>
+{% endblock %}

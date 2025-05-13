@@ -1,0 +1,86 @@
+{% extends "sportscomplex/layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 -mt-8 -mb-8">
+    <!-- Left side with image and branding -->
+    <div class="hidden md:flex md:w-1/2 bg-nust-blue flex-col items-center justify-center p-8 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-pattern"></div>
+        <img src="https://nust.edu.pk/wp-content/uploads/2020/04/ns1.jpg" alt="NUST Logo" class="w-32 h-32 object-contain mb-6 z-10 animate-float bg-white p-2 rounded-full">
+        <h1 class="text-white text-4xl font-bold text-center mb-4 z-10">NUST Sports Complex</h1>
+        <p class="text-blue-100 text-xl text-center max-w-md z-10">Join our community and enjoy world-class sports facilities</p>
+        
+        <!-- Sports facilities showcase -->
+        <div class="mt-12 grid grid-cols-2 gap-6 z-10 w-4/5 max-w-lg">
+            <div class="bg-white bg-opacity-10 p-4 rounded-lg backdrop-blur-sm border border-white border-opacity-20 text-center">
+                <i class="fas fa-swimming-pool text-3xl mb-2 text-white"></i>
+                <h3 class="text-white font-medium">Swimming Pool</h3>
+            </div>
+            <div class="bg-white bg-opacity-10 p-4 rounded-lg backdrop-blur-sm border border-white border-opacity-20 text-center">
+                <i class="fas fa-dumbbell text-3xl mb-2 text-white"></i>
+                <h3 class="text-white font-medium">Gym</h3>
+            </div>
+            <div class="bg-white bg-opacity-10 p-4 rounded-lg backdrop-blur-sm border border-white border-opacity-20 text-center">
+                <i class="fas fa-table-tennis-paddle-ball text-3xl mb-2 text-white"></i>
+                <h3 class="text-white font-medium">Table Tennis</h3>
+            </div>
+            <div class="bg-white bg-opacity-10 p-4 rounded-lg backdrop-blur-sm border border-white border-opacity-20 text-center">
+                <i class="fas fa-bowling-ball text-3xl mb-2 text-white"></i>
+                <h3 class="text-white font-medium">Bowling</h3>
+            </div>
+        </div>
+        
+        <!-- Bottom decorative wave -->
+        <div class="absolute bottom-0 left-0 right-0 z-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="opacity-20">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,181.3C384,203,480,213,576,202.7C672,192,768,160,864,170.7C960,181,1056,235,1152,245.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- Right side with form -->
+    <div class="w-full md:w-1/2 flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white rounded-xl shadow-2xl p-8 animate-fade-in border border-gray-100">
+            <!-- Mobile logo -->
+            <div class="md:hidden flex justify-center mb-6">
+                <img src="https://nust.edu.pk/wp-content/uploads/2020/04/ns1.jpg" alt="NUST Logo" class="w-20 h-20 object-contain">
+            </div>
+            
+            <h2 class="text-3xl font-bold mb-6 text-center text-nust-blue">Create Your Account</h2>
+            
+            <!-- Form container for HTMX updates -->
+            <div id="register-form-container">
+                {% include "sportscomplex/partials/register_form.html" %}
+            </div>
+            
+            <div class="mt-6 text-center text-gray-600">
+                <p>Already have an account?</p>
+                <a href="{% url 'login' %}" class="text-nust-blue hover:text-blue-800 font-medium">Log In</a>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                <p class="text-xs text-gray-500">
+                    By registering, you agree to the NUST Sports Complex Terms of Service
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script>
+    document.body.addEventListener('htmx:configRequest', function(event) {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    });
+
+    document.body.addEventListener('htmx:beforeSwap', function(event) {
+        if (event.detail.xhr.status === 200 && event.detail.xhr.getResponseHeader("HX-Redirect")) {
+            window.location.href = event.detail.xhr.getResponseHeader("HX-Redirect");
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,474 @@
+{% extends "sportscomplex/layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<!-- Hero Banner Section -->
+<div class="relative">
+    <!-- Hero Image -->
+    <div class="h-96 overflow-hidden rounded-xl">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+             alt="NUST Sports Complex" 
+             class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-nust-blue/80 to-transparent"></div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="absolute top-0 left-0 w-full h-full flex items-center">
+        <div class="container mx-auto px-6">
+            <div class="max-w-lg">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">NUST Sports Complex</h1>
+                <p class="text-white/90 text-xl mb-8">World-class sports facilities for students, faculty, and alumni.</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <a href="{% url 'booking' %}" class="inline-block px-6 py-3 bg-white text-nust-blue font-semibold rounded-lg hover:bg-blue-50 transition-all duration-300 shadow-lg text-center">
+                        <i class="fas fa-calendar-plus mr-2"></i> Book a Facility
+                    </a>
+                    <a href="{% url 'register' %}" class="inline-block px-6 py-3 bg-nust-gold text-white font-semibold rounded-lg hover:bg-yellow-500 transition-all duration-300 shadow-lg text-center">
+                        <i class="fas fa-user-plus mr-2"></i> Join Today
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Announcements Section -->
+<div class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold text-gray-800">
+                <i class="fas fa-bullhorn text-nust-blue mr-2"></i> Announcements
+            </h2>
+            <a href="#" class="text-nust-blue hover:text-blue-700 flex items-center text-sm font-medium">
+                View All <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Announcement 1 -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300">
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+                         alt="Swimming Competition" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <i class="far fa-calendar mr-2"></i> May 20, 2025
+                        <span class="mx-2">•</span>
+                        <i class="far fa-clock mr-2"></i> 2:00 PM
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Annual Swimming Competition</h3>
+                    <p class="text-gray-600 mb-4">Registration for the annual NUST swimming competition is now open. Students and faculty are encouraged to participate.</p>
+                    <a href="#" class="text-nust-blue hover:text-blue-700 font-medium inline-flex items-center">
+                        Learn more <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Announcement 2 -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300">
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+                         alt="Basketball Tournament" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <i class="far fa-calendar mr-2"></i> June 5, 2025
+                        <span class="mx-2">•</span>
+                        <i class="far fa-clock mr-2"></i> 4:00 PM
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Interdepartmental Basketball Tournament</h3>
+                    <p class="text-gray-600 mb-4">Departments are invited to form teams for the upcoming basketball tournament. Prizes worth PKR 50,000 to be won!</p>
+                    <a href="#" class="text-nust-blue hover:text-blue-700 font-medium inline-flex items-center">
+                        Learn more <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Announcement 3 -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300">
+                <div class="bg-red-600 text-white px-4 py-2 text-sm font-medium">Important Notice</div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Facility Maintenance Schedule</h3>
+                    <p class="text-gray-600 mb-4">Notices will be displayed here</p>
+                    <div class="flex items-center text-sm text-gray-500 mt-6">
+                        <i class="far fa-calendar-check mr-2"></i> Date Demo Date
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Facility Timings Section -->
+<div class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            <i class="fas fa-clock text-nust-blue mr-2"></i> Facility Timings
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Swimming Pool -->
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-blue-500 hover:transform hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-full p-3 mr-4">
+                        <i class="fas fa-swimming-pool text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Swimming Pool</h3>
+                </div>
+                
+                <!-- Male Timings -->
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-700 mb-2">Male Time Slots:</h4>
+                    <div class="space-y-1">
+                        <div class="text-sm grid grid-cols-2">
+                            <span class="text-gray-600">Slot 1-5:</span>
+                            <span class="font-medium">10:00 AM - 1:45 PM</span>
+                        </div>
+                        <div class="text-sm text-gray-500 pl-4">
+                            <div>1. 10:00 - 10:45</div>
+                            <div>2. 10:45 - 11:30</div>
+                            <div>3. 11:30 - 12:15</div>
+                            <div>4. 12:15 - 1:00</div>
+                            <div>5. 1:00 - 1:45</div>
+                        </div>
+                        <div class="text-sm text-gray-600 italic">Break: 1:45 PM - 3:30 PM</div>
+                        <div class="text-sm grid grid-cols-2">
+                            <span class="text-gray-600">Slot 6-8:</span>
+                            <span class="font-medium">6:00 PM - 8:15 PM</span>
+                        </div>
+                        <div class="text-sm text-gray-500 pl-4">
+                            <div>6. 6:00 - 6:45</div>
+                            <div>7. 6:45 - 7:30</div>
+                            <div>8. 7:30 - 8:15</div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Female Timings -->
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-700 mb-2">Female Time Slots:</h4>
+                    <div class="space-y-1 text-sm text-gray-500 pl-4">
+                        <div>1. 3:30 - 4:15</div>
+                        <div>2. 4:15 - 5:00</div>
+                        <div>3. 5:00 - 6:00</div>
+                    </div>
+                </div>
+            
+                <!-- Important Notes -->
+                <div class="border-t border-gray-100 pt-3 mt-3">
+                    <p class="text-sm font-medium text-gray-700 mb-2">Important Notes:</p>
+                    <ul class="text-xs text-gray-500 space-y-1 list-disc pl-4">
+                        <li>Pool remains closed for maintenance on Friday</li>
+                        <li>Each member is allotted 30 minutes for swimming per day (adjustable if possible)</li>
+                        <li>Members can use swimming pool only (SPA not included)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Gym -->
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-red-500 hover:transform hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="bg-red-100 rounded-full p-3 mr-4">
+                        <i class="fas fa-dumbbell text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Fitness Gym</h3>
+                </div>
+                <div class="space-y-2 mt-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Monday - Friday:</span>
+                        <span class="font-medium">09:00 - 21:00</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Friday Break:</span>
+                        <span class="font-medium">12:30 - 14:30</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Saturday:</span>
+                        <span class="font-medium">13:00 - 23:00</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Sunday:</span>
+                        <span class="font-medium">Closed</span>
+                    </div>
+
+                    <!-- Dress Code -->
+                    <div class="border-t border-gray-100 pt-3 mt-3">
+                        <p class="text-sm font-medium text-gray-700 mb-2">Dress Code:</p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc pl-4">
+                            <li>Track suits with proper sports shoes required</li>
+                            <li>Not allowed: Jeans, pants with rivets, dress shoes, sandals, flip-flops, boots, bare feet, Shalwar Qameez (For Male)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Guidelines -->
+                    <div class="border-t border-gray-100 pt-3 mt-3">
+                        <p class="text-sm font-medium text-gray-700 mb-2">Guidelines:</p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc pl-4">
+                            <li>Available to registered members only (14 years and above)</li>
+                            <li>Trainer available for guidance</li>
+                            <li>Personal water bottle, towel, and proper attire required</li>
+                            <li>No food items, firearms, or pets allowed</li>
+                            <li>Guest entry with special ticket (Rs. 100/-) only</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Indoor Courts -->
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-green-500 hover:transform hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-100 rounded-full p-3 mr-4">
+                        <i class="fas fa-table-tennis-paddle-ball text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Indoor Courts</h3>
+                </div>
+                <div class="space-y-2 mt-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Monday - Thursday:</span>
+                        <span class="font-medium">1:00 PM - 9:00 PM</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Friday:</span>
+                        <span class="font-medium">2:30 PM - 9:00 PM</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Saturday:</span>
+                        <span class="font-medium">1:00 PM - 9:00 PM</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Sunday:</span>
+                        <span class="font-medium">Closed</span>
+                    </div>
+                    <div class="border-t border-gray-100 pt-3 mt-3">
+                        <p class="text-xs text-gray-500">* Advance booking required for all courts</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bowling Alley -->
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-purple-500 hover:transform hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="bg-purple-100 rounded-full p-3 mr-4">
+                        <i class="fas fa-bowling-ball text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Bowling Alley</h3>
+                </div>
+                <div class="space-y-2 mt-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Monday - Thursday:</span>
+                        <span class="font-medium">1:00 PM - 9:00 PM</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Friday:</span>
+                        <span class="font-medium">2:30 PM - 9:00 PM</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Saturday:</span>
+                        <span class="font-medium">1:00 PM - 9:00 PM</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Sunday:</span>
+                        <span class="font-medium">Closed</span>
+                    </div>
+
+                    <!-- Dress Code -->
+                    <div class="border-t border-gray-100 pt-3 mt-3">
+                        <p class="text-sm font-medium text-gray-700 mb-2">Dress Code:</p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc pl-4">
+                            <li>Proper bowling shoes required (leather/PU sole)</li>
+                            <li>Not allowed: Sandals, flip-flops, boots, bare feet, pointed shoes/spikes, heels, sleeveless T-shirts, shorts, Shalwar Qameez (males)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Guidelines -->
+                    <div class="border-t border-gray-100 pt-3 mt-3">
+                        <p class="text-sm font-medium text-gray-700 mb-2">Guidelines:</p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc pl-4">
+                            <li>Wait for bowlers on your sides to complete their turn</li>
+                            <li>Bowler on the right goes first</li>
+                            <li>Leave approach area after bowling</li>
+                            <li>No throwing balls in the air</li>
+                            <li>Keep celebrations minimal</li>
+                            <li>Children under 8 must be accompanied by an adult</li>
+                            <li>Mixed games allowed only for families</li>
+                            <li>No food items, pets, or firearms allowed</li>
+                            <li>Rs. 200/person per hour</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Facilities Section -->
+<div class="py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            Our World-Class Facilities
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <!-- Olympic Size Swimming Pool -->
+            <div class="flex flex-col">
+                <div class="h-80 overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1576013551627-0fd48f4af20f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Olympic Size Swimming Pool" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="bg-white p-6 rounded-b-xl shadow-md -mt-16 mx-4 relative z-10">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Olympic Size Swimming Pool</h3>
+                    <p class="text-gray-600 mb-4">Our international standard 50-meter swimming pool with 8 lanes, equipped with advanced water filtration systems and heating for year-round swimming.</p>
+                    <a href="{% url 'booking' %}" class="text-nust-blue hover:text-blue-700 font-medium inline-flex items-center">
+                        Book now <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- State-of-the-Art Gymnasium -->
+            <div class="flex flex-col">
+                <div class="h-80 overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="State-of-the-Art Gymnasium" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="bg-white p-6 rounded-b-xl shadow-md -mt-16 mx-4 relative z-10">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">State-of-the-Art Gymnasium</h3>
+                    <p class="text-gray-600 mb-4">Featuring the latest fitness equipment, dedicated cardio and weight training areas, and professional trainers available for personalized guidance.</p>
+                    <a href="{% url 'booking' %}" class="text-nust-blue hover:text-blue-700 font-medium inline-flex items-center">
+                        Book now <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Indoor Sports Courts -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="h-56 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Indoor Sports Courts" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Indoor Sports Courts</h3>
+                    <p class="text-gray-600">Multiple courts for badminton, basketball, volleyball, and table tennis with professional flooring and equipment.</p>
+                </div>
+            </div>
+            
+            <!-- Bowling Alley -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="h-56 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1628194163977-36808743db9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Bowling Alley" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Bowling Alley</h3>
+                    <p class="text-gray-600">Six professional bowling lanes with automatic scoring systems and rental equipment available.</p>
+                </div>
+            </div>
+            
+            <!-- Squash Courts -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="h-56 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Squash Courts" 
+                         class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Membership CTA -->
+<div class="py-16 bg-gradient-to-r from-nust-blue to-blue-700 rounded-xl my-12">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Join NUST Sports Complex Today</h2>
+        <p class="text-blue-100 text-xl max-w-2xl mx-auto mb-8">Get access to all our premium facilities with flexible membership options designed for students, faculty, and alumni.</p>
+        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="{% url 'membership' %}" class="px-8 py-3 bg-white text-nust-blue font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg">
+                View Membership Plans
+            </a>
+            <a href="{% url 'register' %}" class="px-8 py-3 bg-nust-gold text-white font-bold rounded-lg hover:bg-yellow-500 transition-all duration-300 shadow-lg">
+                Register Now
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials -->
+<div class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">
+            What Our Members Say
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-6 rounded-xl shadow-md relative">
+                <div class="text-nust-blue opacity-20 absolute top-4 left-4 text-6xl">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="relative z-10">
+                    <p class="text-gray-600 mb-6 italic">The swimming facility at NUST Sports Complex is exceptional. As a competitive swimmer, I appreciate the Olympic-sized pool and professional coaching available.</p>
+                    <div class="flex items-center">
+                        <div class="bg-gray-200 rounded-full h-12 w-12 flex items-center justify-center mr-4">
+                            <span class="text-nust-blue font-bold">AK</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Ali Khan</h4>
+                            <p class="text-sm text-gray-500">Engineering Student</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-6 rounded-xl shadow-md relative">
+                <div class="text-nust-blue opacity-20 absolute top-4 left-4 text-6xl">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="relative z-10">
+                    <p class="text-gray-600 mb-6 italic">As a faculty member, I've enjoyed the gym facilities for over 5 years now. The equipment is always well-maintained and the staff is incredibly helpful.</p>
+                    <div class="flex items-center">
+                        <div class="bg-gray-200 rounded-full h-12 w-12 flex items-center justify-center mr-4">
+                            <span class="text-nust-blue font-bold">SA</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Dr. Saima Ahmad</h4>
+                            <p class="text-sm text-gray-500">Associate Professor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="bg-white p-6 rounded-xl shadow-md relative">
+                <div class="text-nust-blue opacity-20 absolute top-4 left-4 text-6xl">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="relative z-10">
+                    <p class="text-gray-600 mb-6 italic">The online booking system makes it so convenient to reserve facilities. I regularly book badminton courts, and the process is seamless every time.</p>
+                    <div class="flex items-center">
+                        <div class="bg-gray-200 rounded-full h-12 w-12 flex items-center justify-center mr-4">
+                            <span class="text-nust-blue font-bold">OM</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Omar Malik</h4>
+                            <p class="text-sm text-gray-500">Business School Alumni</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/booking_pricing.js' %}"></script>
+{% endblock %}

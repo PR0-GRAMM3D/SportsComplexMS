@@ -1,0 +1,151 @@
+{% extends "sportscomplex/layout.html" %}
+
+{% block title %}Book a Facility{% endblock %}
+
+{% block body %}
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
+    <div class="w-full max-w-lg bg-white rounded-xl shadow-xl p-8 animate-fade-in">
+        <h2 class="text-3xl font-bold mb-6 text-center text-blue-700">Book a Facility</h2>
+        
+        <!-- Pricing info card -->
+        <div class="mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <h3 class="font-semibold text-blue-800 mb-2">Booking Pricing</h3>
+            <ul class="text-sm text-gray-700 space-y-1">
+                <li class="flex justify-between">
+                    <span>Bowling Alley:</span>
+                    <span class="font-medium">Rs. 200/person</span>
+                </li>
+                <li class="flex justify-between">
+                    <span>Table Tennis:</span>
+                    <span class="font-medium">Free</span>
+                </li>
+                <li class="flex justify-between">
+                    <span>Badminton Court:</span>
+                    <span class="font-medium">Free</span>
+                </li>
+            </ul>
+        </div>
+        
+        <form 
+            method="post"
+            hx-post="{% url 'booking' %}"
+            hx-target="this"
+            hx-swap="outerHTML"
+            class="space-y-6"
+        >
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.alleys_needed }}
+            
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Facility</label>
+                {{ form.booking_facility }}
+                {{ form.booking_facility.errors }}
+            </div>
+            
+            <!-- Add this inside your form, after the facility selection -->
+            <div id="availability-info" class="mt-2 text-sm">
+                <!-- This will be updated via JavaScript -->
+            </div>
+            
+            <!-- Bowling specific fields -->
+            <div id="bowling-fields" style="display: none;">
+                <div class="p-4 border border-blue-200 rounded-lg bg-blue-50">
+                    <h4 class="font-medium mb-3">Bowling Alley Details</h4>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-700 font-semibold mb-1">Number of Players</label>
+                        {{ form.number_of_players }}
+                        <p class="text-xs text-gray-500 mt-1">Maximum 8 players allowed (4 per alley)</p>
+                        {{ form.number_of_players.errors }}
+                    </div>
+                    
+                    <div>
+                        <label class="flex items-center">
+                            {{ form.is_mixed_gender }}
+                            <span>This is a mixed gender group</span>
+                        </label>
+                        <p class="text-xs text-gray-500 mt-1">Mixed gender groups will be allocated 2 separate alleys</p>
+                        {{ form.is_mixed_gender.errors }}
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Schedule</label>
+                {{ form.timing }}
+                {{ form.timing.errors }}
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Booking Fee</label>
+                {{ form.total_amount }}
+                <p class="text-xs text-gray-500 mt-1">Fee is calculated based on selected facility and options</p>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold mb-1">Payment Method</label>
+                <div class="flex gap-6">
+                    {{ form.payment_method }}
+                </div>
+                {{ form.payment_method.errors }}
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-md hover:scale-105">
+                Book Now
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.animate-fade-in {
+  animation: fade-in 0.7s cubic-bezier(.4,0,.2,1);
+}
+</style>
+
+{% endblock %}
+
+<!-- Load booking pricing JavaScript -->
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/booking_pricing.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const facilitySelect = document.querySelector('[name="booking_facility"]');
+    const timingInput = document.querySelector('[name="timing"]');
+    const availabilityInfo = document.getElementById('availability-info');
+
+    async function checkAvailability() {
+        if (!facilitySelect.value || !timingInput.value) return;
+
+        try {
+            const response = await fetch(
+                `/check-availability/?facility_id=${facilitySelect.value}&timing=${timingInput.value}`
+            );
+            const data = await response.json();
+
+            if (data.available) {
+                availabilityInfo.innerHTML = `
+                    <span class="text-green-600">
+                        ${data.message} (${data.available_units} units available)
+                    </span>`;
+            } else {
+                availabilityInfo.innerHTML = `
+                    <span class="text-red-600">${data.message}</span>`;
+            }
+        } catch (error) {
+            console.error('Error checking availability:', error);
+        }
+    }
+
+    facilitySelect.addEventListener('change', checkAvailability);
+    timingInput.addEventListener('change', checkAvailability);
+});
+</script>
+{% endblock %}
