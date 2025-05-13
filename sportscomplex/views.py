@@ -26,7 +26,7 @@ import time
 # Create your views here.
 @login_required
 def dashboard(request):
-    user_bookings = Booking.objects.filter(booking_user = request.user)
+    user_bookings = Booking.objects.filter(booking_user = request.user) 
     return render(request, "sportscomplex/dashboard.html", {
         "user_bookings": user_bookings
     })
@@ -36,7 +36,7 @@ def home(request):
 
 def login_view(request):
     if request.method == "POST":
-        login_form = LoginForm(request.POST)
+        login_form = LoginForm(request.POST) #forms.py 
         if login_form.is_valid():
             username = login_form.cleaned_data["username"]
             password = login_form.cleaned_data["password"]
@@ -45,7 +45,7 @@ def login_view(request):
                 login(request, user)
                 if request.headers.get("HX-Request"):
                     response = HttpResponse()
-                    response["HX-Redirect"] = reverse("dashboard")
+                    response["HX-Redirect"] = reverse("dashboard") #HttpResponseRedirect(reverse(name of url))
                     return response
                 return HttpResponseRedirect(reverse("dashboard"))
             else:
